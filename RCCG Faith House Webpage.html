@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RCCG Faith House Portal</title>
+
+    <style>
+        /* ---------------- Base / Variables ---------------- */
+        :root {
+            --dark: #2c2c2c;
+            --primary: #0a3d62;
+            --bg: #e5e5e5;
+            --white: #ffffff;
+            --card: #f2f2f2;
+            --cream: #f7f3e9;
+            --text: #302e2e;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            text-align: center;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        img {
+            max-width: 100%;
+            display: block
+        }
+
+        /* ---------------- NAVBAR (A - slim professional) ---------------- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--dark);
+            color: var(--white);
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .logo-area img.logo-img {
+            width: 72px;
+            height: auto;
+            border-radius: 4px;
+            object-fit: cover
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 900;
+            color: #f2f3f5;
+            margin: 0
+        }
+
+        /* desktop nav links */
+        nav .nav-links {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center
+        }
+
+        nav .nav-links li {
+            margin: 0
+        }
+
+        nav .nav-links a {
+            color: var(--white);
+            font-size: 15px;
+            padding: 0px 0px;
+            transition: all .18s
+        }
+
+        nav .nav-links a:hover {
+            color: var(--cream);
+            border-bottom: 2px solid var(--cream);
+            opacity: .9
+        }
+
+        /* ---------- SLIDE-IN MOBILE MENU (Option B) ---------- */
+        /* hide hamburger by default (desktop) */
+        .hamburger {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            width: 44px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        /* mobile sidebar */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 50%;
+            max-width: 360px;
+            height: 100%;
+            background: #0a3d62;
+            box-shadow: 2px 0 18px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            transition: right .35s cubic-bezier(.2, .8, .2, 1);
+
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu .close-btn {
+            align-self: flex-end;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--white);
+            background: none;
+            border: none;
+        }
+
+        .mobile-menu a {
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 600;
+            padding: 8px 0;
+            text-align: left;
+            display: block;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        }
+
+        .mobile-menu a :hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* show hamburger and hide desktop nav on small screens */
+        @media (max-width: 800px) {
+            .nav-links a {
+                display: none;
+            }
+
+            .logo-text {
+                font-size: 20px;
+                font-weight: 900;
+                color: #f2f3f5;
+                margin: 0
+            }
+
+            .hamburger {
+                display: block;
+                color: var(--white);
+                font-size: 40px;
+            }
+        }
+
+        /* ---------------- Hero ---------------- */
+        .hero {
+            position: relative;
+            background: url('church worship.jpg') center/cover no-repeat;
+            height: 90vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 16px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.45) 100%);
+            z-index: 0;
+        }
+
+        .hero-inner {
+            z-index: 2;
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+            color: var(--white);
+            padding: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+            /* slower */
+        }
+
+        .hero-inner.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-inner img {
+            width: 140px;
+            margin: 0 auto 14px;
+            border-radius: 12px
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            margin: 0 0 12px;
+            line-height: 1.02;
+            font-weight: 800;
+            color: var(--white);
+            text-shadow: 0 6px 24px rgba(0, 0, 0, 0.5)
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin: 0 auto 18px;
+            max-width: 900px;
+            color: #f7f3e9;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: transform .18s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ---------------- ABOUT (centered) ---------------- */
+        .about {
+            max-width: 920px;
+            margin: 36px auto;
+            background: #fff3dd;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .about p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #444;
+            margin: 0 auto;
+        }
+
+        /* ---------------- EVENTS (slide-in) ---------------- */
+        .events {
+            background: #fafafa;
+
+            padding: 50px 20px;
+            text-align: center;
+            overflow: visible;
+        }
+
+        .events h2 {
+            font-size: 32px;
+            color: #2c2c2c;
+            margin-top: 0;
+        }
+
+        .event-card {
+            background: #f2f2f2;
+            padding: 15px 20px;
+            max-width: 600px;
+            margin: 12px auto;
+            border-radius: 12px;
+            border-left: 5px solid #2c2c2c;
+            opacity: 0;
+            transform: translateX(-18px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .event-card.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .event-card h3 {
+            margin: 0;
+            color: #2c2c2c;
+        }
+
+        .event-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        /* ---------------- PASTOR (slide-in) ---------------- */
+        .pastor {
+            background: #f7c7781a;
+            /* transparent soft gold overlay */
+
+            padding: 50px 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pastor h2 {
+            color: #302e2e;
+            font-size: 32px;
+            width: 100%;
+            text-align: center;
+            margin: 0 0 6px 0;
+        }
+
+        .pastor-img {
+            width: 220px;
+            height: 250px;
+            border-radius: 30%;
+            object-fit: fill;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateX(18px);
+            transition: opacity .8s ease, transform .8s ease;
+            margin: 50px
+        }
+
+        .pastor-img.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .pastor-text {
+            max-width: 700px;
+            margin: 20px auto;
+            font-size: 18px;
+            color: #444;
+            text-align: left;
+            opacity: 0;
+            transform: translateX(-18px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .pastor-text.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ---------------- GIVE ---------------- */
+        .give {
+            width: 100%;
+            padding-top: 20px;
+            padding-left: 0;
+            padding-right: 0;
+            text-align: center;
+            background: #0a3d62;
+            color: white;
+            height: 350px;
+
+        }
+
+        .give h2 {
+            font-size: 30px;
+            color: white;
+        }
+
+        .give .give-btn {
+            display: inline-block;
+            background: #1e5799;
+
+            color: var(--white);
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+        }
+
+        .give .give-btn:hover {
+            background: #0f0f96;
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .acct {
+            margin-top: 12px;
+            font-size: 16px;
+            color: #ffffff
+        }
+
+        /* ---------------- TESTIMONIES ---------------- */
+        .testimonies {
+            width: 100%;
+            padding-top: 0px;
+            padding-left: 0;
+            padding-right: 0;
+            background: #fff7e6;
+            height: 100%;
+        }
+
+        .testimony-box {
+            background: var(--white);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px 30px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+            font-size: 17px
+        }
+
+        /* ---------------- GALLERY ---------------- */
+        .gallery {
+            max-width: 1100px;
+            margin: 36px auto;
+            padding: 12px;
+        }
+
+        .gallery h2 {
+            font-size: 30px;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 14px
+        }
+
+        /* Default layout: 3 columns */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 220px;
+            gap: 14px;
+            align-items: center;
+            justify-items: stretch;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform .45s ease, box-shadow .45s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            transform: scale(.98);
+        }
+
+        /* gallery show state (scale-in) */
+        .gallery-grid img.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Count-specific layout rules (handled by JS adding classes) */
+        .gallery-grid.count-1 {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-grid.count-2 {
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .gallery-grid.count-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .gallery-grid.count-4 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* For 5 images: 3 on top row; 2 centered below.
+       We'll put 4th in col 1 and 5th in col 3 (so they appear centered with a gap) */
+        .gallery-grid.count-5 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .gallery-grid.count-5 img:nth-child(4) {
+            grid-column: 1;
+            justify-self: center;
+            width: 90%;
+        }
+
+        .gallery-grid.count-5 img:nth-child(5) {
+            grid-column: 3;
+            justify-self: center;
+            width: 90%;
+        }
+
+        /* 6 or more: normal 3 columns */
+        .gallery-grid.count-6plus {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.78);
+            z-index: 120;
+            padding: 20px
+        }
+
+        .lightbox.open {
+            display: flex
+        }
+
+        .lightbox img {
+            max-width: 95%;
+            max-height: 85%;
+            border-radius: 10px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5)
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 8px 10px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--dark)
+        }
+
+        /* ---------------- FOOTER ---------------- */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 28px 14px;
+            text-align: center
+        }
+
+        footer .location {
+            max-width: 760px;
+            margin: auto;
+            margin-bottom: 8px
+        }
+
+        footer .location .image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px
+        }
+
+        footer .location img {
+            width: 26px
+        }
+
+        footer .location h2 {
+            font-size: 16px;
+            color: var(--white);
+            margin: 0
+        }
+
+        footer p {
+            margin: 8px 0 0 0;
+            font-size: 15px
+        }
+
+        /* ---------------- RESPONSIVE ---------------- */
+        @media (max-width: 1000px) {
+            .hero h1 {
+                font-size: 48px
+            }
+
+            .hero p {
+                font-size: 20px
+            }
+        }
+
+        @media (max-width: 800px) {
+            .navbar {
+                padding: 15px 14px
+            }
+
+            .logo-area img.logo-img {
+                width: 60px
+            }
+
+            .hero {
+                height: 72vh;
+                min-height: 420px
+            }
+
+            .hero h1 {
+                font-size: 40px
+            }
+
+            .hero p {
+                font-size: 18px
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 180px;
+                gap: 12px
+            }
+
+            .gallery-grid.count-5 img:nth-child(4),
+            .gallery-grid.count-5 img:nth-child(5) {
+                grid-column: auto;
+                justify-self: stretch;
+                width: 100%;
+            }
+
+            .pastor {
+                flex-direction: column;
+                align-items: center;
+                text-align: center
+            }
+
+            .pastor-text {
+                text-align: center
+            }
+
+            .about,
+            .events,
+            .pastor,
+            .give,
+            .testimonies {
+                padding: 20px;
+                margin: 18px
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                height: 62vh;
+                min-height: 360px;
+                padding: 18px
+            }
+
+            .hero h1 {
+                font-size: 32px
+            }
+
+            .hero p {
+                font-size: 15px
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 240px;
+                gap: 18px
+            }
+
+            .gallery-grid img {
+                height: 240px
+            }
+
+            footer .location h2 {
+                font-size: 16px
+            }
+
+            .logo-text {
+                font-size: 18px
+            }
+
+            .pastor-img {
+                width: 200px;
+                height: 220px
+            }
+        }
+
+        /* helper */
+        .sr-only {
+            position: absolute;
+            left: -9999px
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar" role="banner">
+        <div class="logo-area">
+            <img src="FH Logo Transparent.png" class="logo-img" alt="RCCG Faith House logo">
+            <h3 class="logo-text">RCCG Faith House</h3>
+        </div>
+
+        <!-- desktop links -->
+        <nav aria-label="Main navigation">
+            <ul class="nav-links">
+                <li><a href="#events">Events</a></li>
+                <li><a href="#pastor">Meet Our Pastor</a></li>
+                <li><a href="#give">Give Online</a></li>
+                <li><a href="#testimonies">Testimonies</a></li>
+            </ul>
+        </nav>
+
+        <!-- hamburger for mobile (opens slide-in menu) -->
+        <button class="hamburger" aria-label="Open menu" onclick="openMobileMenu()">☰</button>
+    </header>
+
+    <!-- Slide-in MOBILE Drawer Menu (Option B) -->
+    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+        <button class="close-btn" aria-label="Close menu" onclick="closeMobileMenu()">✕</button>
+        <a href="#events" onclick="closeMobileMenu()">Events</a>
+        <a href="#pastor" onclick="closeMobileMenu()">Meet Our Pastor</a>
+        <a href="#give" onclick="closeMobileMenu()">Give Online</a>
+        <a href="#testimonies" onclick="closeMobileMenu()">Testimonies</a>
+        <a href="#gallery" onclick="closeMobileMenu()">Gallery</a>
+    </div>
+
+    <!-- HERO -->
+    <main id="home">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero-inner" id="heroInner">
+                <img src="Faith House Logo 1.jpg" alt="Faith House Logo">
+                <h1 id="hero-title"><b>Welcome to RCCG Faith House</b></h1>
+                <p><b>Experience an atmosphere of Praise, Worship, Prayer, Healing and Breakthrough</b></p>
+                <a href="#events" class="btn">Join Us This Sunday</a>
+            </div>
+        </section>
+
+        <!-- ABOUT (centered content) -->
+        <section id="about" class="about">
+            <p><b>We are a community of believers committed to spreading God’s word and serving humanity. Join us for
+                    inspiring services and meaningful fellowship. Our Motto is WE BELIEVE IN FAITH, WE WORK BY
+                    FAITH</b>.
+            </p>
+            <p style="margin-top:12px"><a href="mailto:rccgfaithouse@gmail.com" class="btn"
+                    style="background:var(--primary)">Contact Us</a></p>
+        </section>
+
+
+        <!-- PASTOR (heading appears before image/text as requested) -->
+        <section id="pastor" class="pastor">
+            <h2 id="pastor-title">Meet Our Pastor</h2>
+
+            <img src="PSA.png" class="pastor-img" alt="Pastor Image" id="pastorImg">
+
+            <div class="pastor-text" id="pastorText">
+                <p><b>Pastor S.P. Akinduro</b> is the lead pastor of RCCG Faith House.
+                    He is passionate about teaching the Word of God, raising disciples,
+                    and helping people grow spiritually in Christ.</p>
+            </div>
+        </section>
+
+        <!-- EVENTS -->
+        <section id="events" class="events" aria-labelledby="events-title">
+            <h2 id="events-title">Our Upcoming Events</h2>
+
+            <div class="event-card">
+                <h3>Sunday Celebration Service</h3>
+                <p>Every Sunday • 9:00 AM</p>
+            </div>
+
+            <div class="event-card">
+                <h3>RCCG Faith House Talent Development Programme (TDP)</h3>
+                <p>Every Sunday • 2:00 PM</p>
+            </div>
+
+            <div class="event-card">
+                <h3>Digging Deep (Bible Study)</h3>
+                <p>Every Wednesday • 6:00 PM</p>
+            </div>
+        </section>
+
+        <!-- GIVE -->
+        <section id="give" class="give">
+            <h2 id="give-title">Give Online</h2>
+            <p>Your generosity supports the work of the Kingdom.</p>
+            <p><b>(2 Chronicles 31:12)</b></p>
+            <a href="https:// .com/" target="_blank" class="give-btn">Give Now</a>
+
+            <p class="acct">
+                Church Account Details: <br>
+                <strong>RCCG FAITH HOUSE</strong> <br>
+                <strong>Bank:</strong> Guaranty Trust Bank Plc.(GTBank) <br>
+                <strong>Account Number:</strong> 1892770596
+            </p>
+        </section>
+
+        <!-- TESTIMONIES -->
+        <section id="testimonies" class="testimonies">
+            <h2 id="testimonies-title">Testimonies</h2>
+
+            <div class="testimony-box">
+                <p>"God healed me completely during Digging Deep! Glory to Jesus!"</p>
+                <h4>- Bro. Gabriel, Church Member</h4>
+            </div>
+
+            <div class="testimony-box">
+                <p>"I got a miracle job after our Monthly Prayer Sunday program."</p>
+                <h4>- Bro. Johnson, Church Member</h4>
+            </div>
+
+            <div class="testimony-box">
+                <p>"My family experienced restoration and breakthrough this year."</p>
+                <h4>- Sister Adebayo, Church Member</h4>
+            </div>
+        </section>
+
+        <!-- GALLERY -->
+        <section id="gallery" class="gallery">
+            <h2 id="gallery-title">Church Gallery</h2>
+
+            <div class="gallery-grid" aria-live="polite" id="galleryGrid">
+                <img src="IMG_20250907_111950_222.jpg" alt="Gallery 1" data-src="IMG_20250907_111950_222.jpg">
+                <img src="IMG_20250907_111914_834.jpg" alt="Gallery 2" data-src="IMG_20250907_111914_834.jpg">
+                <img src="IMG_20250907_111903_003.jpg" alt="Gallery 3" data-src="IMG_20250907_111903_003.jpg">
+                <!-- add more images as needed, JS will count them and adjust layout -->
+            </div>
+        </section>
+    </main>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+        <button class="close" aria-label="Close">✕</button>
+        <img src="" alt="Expanded gallery image">
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="location">
+            <div class="image">
+                <img src="Google Location Logo 2.png" alt="location icon">
+                <h2><b>Plot 40, Beside Josheld Hotel, Bakery/Elemu Bus-stop, Oke-eletu, Off Ijede Road, Ikorodu, Lagos
+                        State, Nigeria.</b></h2>
+            </div>
+        </div>
+
+        <p>Email: rccgfaithouse@gmail.com | Phone Number: +234 (905) 169 9895 </p>
+        <p>&copy; 2025 RCCG Faith House. All rights reserved.</p>
+    </footer>
+
+    <!-- ---------- JavaScript: mobile menu, smooth scroll, lightbox, animations, gallery layout ---------- -->
+    <script>
+        /* ===== mobile slide-in menu (Option B) ===== */
+        const mobileMenuEl = document.getElementById('mobile-menu');
+        function openMobileMenu() {
+            mobileMenuEl.classList.add('open');
+            mobileMenuEl.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hide'; // prevent background scroll
+        }
+        function closeMobileMenu() {
+            mobileMenuEl.classList.remove('open');
+            mobileMenuEl.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = ''; // restore scroll
+        }
+
+        /* ===== smooth anchor scrolling ===== */
+        (function () {
+            const anchors = document.querySelectorAll('a[href^="#"]');
+            anchors.forEach(a => {
+                a.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#') return;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        closeMobileMenu();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        })();
+
+        /* ===== gallery lightbox ===== */
+        (function () {
+            const grid = document.getElementById('galleryGrid');
+            const lightbox = document.getElementById('lightbox');
+            const lbImg = lightbox.querySelector('img');
+            const lbClose = lightbox.querySelector('.close');
+
+            if (!grid) return;
+
+            grid.addEventListener('click', function (e) {
+                const img = e.target.closest('img');
+                if (!img) return;
+                const src = img.getAttribute('src') || img.dataset.src;
+                lbImg.src = src;
+                lightbox.classList.add('open');
+                lightbox.style.display = 'flex';
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            });
+
+            function hideLB() {
+                lightbox.classList.remove('open');
+                lightbox.style.display = 'none';
+                lightbox.setAttribute('aria-hidden', 'true');
+                lbImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            lbClose.addEventListener('click', hideLB);
+            lightbox.addEventListener('click', function (e) {
+                if (e.target === lightbox) hideLB();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && lightbox.classList.contains('open')) hideLB();
+            });
+        })();
+
+        /* ===== animations: hero, events, pastor, gallery images ===== */
+        (function () {
+            // Hero: slow fade-up on load
+            const heroInner = document.getElementById('heroInner');
+            if (heroInner) {
+                // slight delay then show
+                window.addEventListener('load', () => {
+                    setTimeout(() => heroInner.classList.add('show'), 250); // slower but subtle
+                });
+            }
+
+            // IntersectionObserver for selective sections
+            const ioOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        // events cards -> slide-in
+                        if (el.classList.contains('event-card')) el.classList.add('show');
+                        // pastor image and text -> slide-in
+                        if (el.id === 'pastorImg' || el.id === 'pastorText') el.classList.add('show');
+                        // gallery images -> scale-in
+                        if (el.closest && el.closest('.gallery-grid')) el.classList.add('show');
+                        // unobserve once shown for performance
+                        io.unobserve(el);
+                    }
+                });
+            }, ioOptions);
+
+            // observe event-cards
+            document.querySelectorAll('.event-card').forEach(c => io.observe(c));
+            // observe pastor img & text
+            const pImg = document.getElementById('pastorImg');
+            const pText = document.getElementById('pastorText');
+            if (pImg) io.observe(pImg);
+            if (pText) io.observe(pText);
+            // observe gallery images
+            document.querySelectorAll('.gallery-grid img').forEach(img => io.observe(img));
+        })();
+
+        /* ===== gallery layout helper: count images and add class ===== */
+        (function () {
+            const grid = document.getElementById('galleryGrid');
+            if (!grid) return;
+            const imgs = Array.from(grid.querySelectorAll('img'));
+            const count = imgs.length;
+
+            // remove any existing count- classes
+            grid.className = grid.className.replace(/\bcount-\S+/g, '').trim();
+
+            if (count === 1) grid.classList.add('count-1');
+            else if (count === 2) grid.classList.add('count-2');
+            else if (count === 3) grid.classList.add('count-3');
+            else if (count === 4) grid.classList.add('count-4');
+            else if (count === 5) grid.classList.add('count-5');
+            else if (count >= 6) grid.classList.add('count-6plus');
+
+            // Make sure gallery images show (animation handled by IntersectionObserver)
+            imgs.forEach(img => {
+                // if images already visible (no IO support) show them
+                img.classList.add('show');
+            });
+        })();
+    </script>
+</body>
+
+</html>
